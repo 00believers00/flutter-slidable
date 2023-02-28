@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class Slidable extends StatefulWidget {
@@ -30,28 +28,10 @@ class _SlidableState extends State<Slidable> {
   Offset endPosition = Offset.zero;
   double slider = 0;
   SlidableActionEventType eventType = SlidableActionEventType.none;
-  late Timer checkTimer;
-
-  @override
-  void initState() {
-    checkTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      if (!widget.isAction) {
-        if (startPosition != Offset.zero || endPosition != Offset.zero) {
-          clearPosition();
-        }
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    checkTimer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
+    checkAction();
     return GestureDetector(
       onPanDown: (_) {
         widget.onChangeAction(widget.id);
@@ -100,6 +80,15 @@ class _SlidableState extends State<Slidable> {
         ],
       ),
     );
+  }
+  
+  Future<void> checkAction() async {
+    await Future.delayed(const Duration(milliseconds: 50));
+    if (!widget.isAction) {
+      if (startPosition != Offset.zero || endPosition != Offset.zero) {
+        clearPosition();
+      }
+    }
   }
 
   void clearPosition() {

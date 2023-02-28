@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:slidable/slidable.dart';
 
@@ -69,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onPressedAction(int? id){
-    print('Delete index $id');
+    if (kDebugMode) {
+      print('Delete index $id');
+    }
     idAction = null;
     updateScreen();
   }
@@ -96,7 +99,9 @@ class ContentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        print('Click Me!!');
+        if (kDebugMode) {
+          print('Click Me!!');
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
